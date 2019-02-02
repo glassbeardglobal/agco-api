@@ -20,7 +20,6 @@ exports.new = (data, callback) => {
   mongoUtil.getDb().collection(collectionName).insertOne({
     username: data.username,
     password: data.password,
-    communities: [],
     items: [],
   }, (err, result) => {
     callback(err, result);
@@ -47,26 +46,6 @@ exports.login = (data, callback) => {
     callback(err, result);
   });
 };
-
-exports.joinCommunity = (communityId, data, callback) => {
-  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, {
-    $push: {
-      communities: communityId,
-    },
-  }, (err, result) => {
-    callback(err, result);
-  });
-}
-
-exports.leaveCommunity = (communityId, data, callback) => {
-  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, {
-    $pull: {
-      communities: communityId,
-    },
-  }, (err, result) => {
-    callback(err, result);
-  });
-}
 
 exports.addItem = (itemId, data, callback) => {
   mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, {
