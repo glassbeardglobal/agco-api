@@ -22,6 +22,11 @@ exports.new = (data, callback) => {
     name: data.name,
     userId: ObejctId(data.userId),
     image: data.image,
+    manufacturer: data.manufacturer,
+    compatibility: data.compatibility,
+    description: data.description,
+    condition: data.condition,
+    year: data.year,
   }, (err, result) => {
     console.log(result);
     if (err) callback(err);
@@ -35,8 +40,14 @@ exports.new = (data, callback) => {
 exports.update = (id, data, callback) => {
   mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(id) }, {
     name: data.name,
-    userId: ObjectId(data.userId),
+    userId: ObejctId(data.userId),
     image: data.image,
+    manufacturer: data.manufacturer,
+    compatibility: data.compatibility,
+    description: data.description,
+    condition: data.condition,
+    year: data.year,
+    name: data.name,
   }, (err) => {
     callback(err);
   });
