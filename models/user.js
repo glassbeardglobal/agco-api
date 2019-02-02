@@ -48,21 +48,31 @@ exports.login = (data, callback) => {
 };
 
 exports.addItem = (itemId, data, callback) => {
-  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, {
+  let query = {
     $push: {
-      items: itemId,
+      items: ObjectId(itemId),
     },
-  }, (err) => {
+  };
+  if (data.transactionId) {
+    query['$push'].transactions = transactionId;
+  }
+
+  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, query, (err) => {
     callback(err);
   });
 }
 
 exports.removeItem = (itemId, data, callback) => {
-  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, {
+  let query = {
     $pull: {
-      items: itemId,
+      items: ObjectId(itemId),
     },
-  }, (err) => {
+  };
+  if (data.transactionId) {
+    query['$push'] = { transactions: transactionId };
+  }
+
+  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, query, (err) => {
     callback(err);
   });
 }

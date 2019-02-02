@@ -3,7 +3,7 @@ const ObjectId = require('mongodb').ObjectId;
 const mongoUtil = require('./mongoUtil');
 const userModel = require('./user');
 
-const collectionName = 'item';
+const collectionName = 'transaction';
 
 exports.all = (callback) => {
   mongoUtil.getDb().collection(collectionName).find().toArray((err, result) => {
@@ -18,35 +18,32 @@ exports.get = (id, callback) => {
 };
 
 exports.new = (data, callback) => {
+  const date = new Date().getTime();
   mongoUtil.getDb().collection(collectionName).insertOne({
-    name: data.name,
-    userId: ObejctId(data.userId),
-    image: data.image,
+    time: data,
+    item: data.itemId,
+    buyer: data.buyerId,
+    seller: data.sellerId,
   }, (err, result) => {
-    console.log(result);
     if (err) callback(err);
-    // Add item to user as well
-    userModel.addItem(result.insertedId, data, (err) => {
-      callback(err, result);
+    userModel.addItem(itemId, { userId: buyerId, transactionId: result.insertedId }, (err) => {
+      callback(err);
+      userModel.removeItem(itemId, { userId: sellerId, transactionId: result.insertedId }, (err) => {
+        callback(err, result);
+      });
     });
   });
 };
 
 exports.update = (id, data, callback) => {
-  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(id) }, {
-    name: data.name,
-    userId: ObjectId(data.userId),
-    image: data.image,
-  }, (err) => {
-    callback(err);
-  });
+  // mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(id) }, {
+  // }, (err) => {
+  //   callback(err);
+  // });
 };
 
 exports.delete = (id, data, callback) => {
-  mongoUtil.getDb().collection(collectionName).deleteOne({ _id: ObjectId(id) }, (err) => {
-    // Remove item from user
-    userModel.removeItem(id, data, (err) => {
-      callback(err);
-    });
-  });
+  // mongoUtil.getDb().collection(collectionName).deleteOne({ _id: ObjectId(id) }, (err) => {
+
+  // });
 };
