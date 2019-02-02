@@ -20,7 +20,7 @@ exports.get = (id, callback) => {
 exports.new = (data, callback) => {
   mongoUtil.getDb().collection(collectionName).insertOne({
     name: data.name,
-    userId: ObejctId(data.userId),
+    userId: ObjectId(data.userId),
     image: data.image,
     manufacturer: data.manufacturer,
     compatibility: data.compatibility,
@@ -28,7 +28,6 @@ exports.new = (data, callback) => {
     condition: data.condition,
     year: data.year,
   }, (err, result) => {
-    console.log(result);
     if (err) callback(err);
     // Add item to user as well
     userModel.addItem(result.insertedId, data, (err) => {
@@ -55,9 +54,10 @@ exports.update = (id, data, callback) => {
 
 exports.delete = (id, data, callback) => {
   mongoUtil.getDb().collection(collectionName).deleteOne({ _id: ObjectId(id) }, (err) => {
+    if (err) callback(err);
     // Remove item from user
-    userModel.removeItem(id, data, (err) => {
-      callback(err);
+    userModel.removeItem(id, data, (err2) => {
+      callback(err2);
     });
   });
 };

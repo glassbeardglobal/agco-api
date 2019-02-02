@@ -20,16 +20,16 @@ exports.get = (id, callback) => {
 exports.new = (data, callback) => {
   const date = new Date().getTime();
   mongoUtil.getDb().collection(collectionName).insertOne({
-    time: data,
+    time: date,
     item: data.itemId,
     buyer: data.buyerId,
     seller: data.sellerId,
   }, (err, result) => {
     if (err) callback(err);
-    userModel.addItem(itemId, { userId: buyerId, transactionId: result.insertedId }, (err) => {
-      callback(err);
-      userModel.removeItem(itemId, { userId: sellerId, transactionId: result.insertedId }, (err) => {
-        callback(err, result);
+    userModel.addItem(data.itemId, { userId: data.buyerId, transactionId: result.insertedId }, (err2) => {
+      if (err2) callback(err2);
+      userModel.removeItem(data.itemId, { userId: data.sellerId, transactionId: result.insertedId }, (err3) => {
+        callback(err3, result);
       });
     });
   });

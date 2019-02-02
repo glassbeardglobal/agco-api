@@ -16,5 +16,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/user', require('./routes/user'));
 app.use('/item', require('./routes/item'));
 app.use('/login', require('./routes/login'));
+app.use('/transaction', require('./routes/transaction'));
 
 module.exports = app;
