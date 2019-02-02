@@ -1,5 +1,6 @@
 const express = require('express');
 const communityModel = require('../models/community.js');
+const userModel = require('../models/user.js');
 
 const router = express.Router();
 
@@ -24,6 +25,22 @@ router.post('/', (req, res, next) => {
   communityModel.new(req.body, (err, result) => {
     if (err) return next(err);
     res.json(result.insertedId);
+  });
+});
+
+// add user to community
+router.post('/:id/join', (req, res, next) => {
+  userModel.joinCommunity(req.params.id, req.body, (err, result) => {
+    if (err) return next(err);
+    res.json({ success: true });
+  });
+});
+
+// remove user from community
+router.post('/:id/leave', (req, res, next) => {
+  userModel.leaveCommunity(req.params.id, req.body, (err, result) => {
+    if (err) return next(err);
+    res.json({ success: true });
   });
 });
 

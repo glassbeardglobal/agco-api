@@ -18,7 +18,7 @@ exports.get = (id, callback) => {
 
 exports.new = (data, callback) => {
   mongoUtil.getDb().collection(collectionName).insertOne({
-
+    name: data.name,
   }, (err, result) => {
     callback(err, result);
   });
@@ -26,7 +26,7 @@ exports.new = (data, callback) => {
 
 exports.update = (id, data, callback) => {
   mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(id) }, {
-
+    name: data.name,
   }, (err) => {
     callback(err);
   });
