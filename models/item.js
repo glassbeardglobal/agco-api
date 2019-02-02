@@ -21,6 +21,7 @@ exports.new = (data, callback) => {
   mongoUtil.getDb().collection(collectionName).insertOne({
     name: data.name,
     userId: data.userId,
+    image: data.image,
   }, (err, result) => {
     console.log(result);
     if (err) callback(err);
@@ -34,6 +35,7 @@ exports.new = (data, callback) => {
 exports.update = (id, data, callback) => {
   mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(id) }, {
     data: data.name,
+    image: data.image,
   }, (err) => {
     callback(err);
   });
