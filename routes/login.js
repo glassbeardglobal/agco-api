@@ -7,7 +7,12 @@ const router = express.Router();
 router.post('/', (req, res, next) => {
   userModel.login(req.body, (err, result) => {
     if (err) return next(err);
-    res.json(result);
+    if (result) {
+      res.json(result);
+    } else {
+      res.status(401);
+      res.json({ success: false });
+    }
   });
 });
 
