@@ -1,6 +1,7 @@
 const ObjectId = require('mongodb').ObjectId;
 
-const mongoUtil = require('./mongoUtil.js');
+const mongoUtil = require('./mongoUtil');
+const userModel = require('./user');
 
 const collectionName = 'item';
 
@@ -18,22 +19,31 @@ exports.get = (id, callback) => {
 
 exports.new = (data, callback) => {
   mongoUtil.getDb().collection(collectionName).insertOne({
-
+    name: data.name,
+    userId: data.userId,
   }, (err, result) => {
-    callback(err, result);
+    console.log(result);
+    if (err) callback(err);
+    // Add item to user as well
+    userModel.addItem(result.insertedId, data, (err) => {
+      callback(err, result);
+    });
   });
 };
 
 exports.update = (id, data, callback) => {
   mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(id) }, {
-
+    data: data.name,
   }, (err) => {
     callback(err);
   });
 };
 
-exports.delete = (id, callback) => {
+exports.delete = (id, data, callback) => {
   mongoUtil.getDb().collection(collectionName).deleteOne({ _id: ObjectId(id) }, (err) => {
-    callback(err);
+    // Add item to user as well
+    userModel.removeItem(id, data, (err) => {
+      callback(err);
+    });
   });
 };

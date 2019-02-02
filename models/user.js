@@ -67,3 +67,23 @@ exports.leaveCommunity = (communityId, data, callback) => {
     callback(err, result);
   });
 }
+
+exports.addItem = (itemId, data, callback) => {
+  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, {
+    $push: {
+      items: itemId,
+    },
+  }, (err) => {
+    callback(err);
+  });
+}
+
+exports.removeItem = (itemId, data, callback) => {
+  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, {
+    $pull: {
+      items: itemId,
+    },
+  }, (err) => {
+    callback(err);
+  });
+}

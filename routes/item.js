@@ -38,10 +38,12 @@ router.put('/:id', (req, res, next) => {
 
 // delete
 router.delete('/:id', (req, res, next) => {
-  itemModel.delete(req.params.id, (err) => {
+  itemModel.delete(req.params.id, req.body, (err) => {
     if (err) return next(err);
     res.json({ success: true });
   });
 });
+
+
 
 module.exports = router;
