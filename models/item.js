@@ -48,6 +48,7 @@ exports.update = (id, data, callback) => {
     condition: data.condition,
     year: data.year,
     name: data.name,
+    price: data.price,
   }, (err) => {
     callback(err);
   });
