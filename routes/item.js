@@ -20,6 +20,14 @@ router.get('/:id', (req, res, next) => {
   });
 });
 
+// toggle forSale
+router.post('/:id/toggle', (req, res, next) => {
+  itemModel.toggleSelling(req.params.id, req.body, err => {
+    if (err) return next(err);
+    res.json({ success: true });
+  });
+});
+
 // new
 router.post('/', (req, res, next) => {
   itemModel.new(req.body, (err, result) => {
@@ -43,7 +51,5 @@ router.delete('/:id', (req, res, next) => {
     res.json({ success: true });
   });
 });
-
-
 
 module.exports = router;
