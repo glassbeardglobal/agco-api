@@ -24,6 +24,7 @@ exports.new = (data, callback) => {
     item: data.itemId,
     buyer: data.buyerId,
     seller: data.sellerId,
+    price: data.price,
   }, (err, result) => {
     if (err) callback(err);
     userModel.addItem(data.itemId, { userId: data.buyerId, transactionId: result.insertedId }, (err2) => {
