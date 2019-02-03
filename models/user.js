@@ -21,6 +21,10 @@ exports.new = (data, callback) => {
     username: data.username,
     password: data.password,
     items: [],
+    image: '',
+    contact: data.contact,
+    address: data.address,
+    telephone: data.telephone,
   }, (err, result) => {
     callback(err, result);
   });
