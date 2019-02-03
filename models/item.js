@@ -28,6 +28,7 @@ exports.new = (data, callback) => {
     condition: data.condition,
     year: data.year,
     price: data.price,
+    forSale: false,
   }, (err, result) => {
     if (err) callback(err);
     // Add item to user as well
