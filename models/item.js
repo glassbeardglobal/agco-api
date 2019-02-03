@@ -52,6 +52,7 @@ exports.update = (id, data, callback) => {
     name: data.name,
     category: data.category,
     forSale: data.forSale,
+    price: data.price,
   }, (err) => {
     callback(err);
   });
