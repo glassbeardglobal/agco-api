@@ -28,6 +28,8 @@ exports.new = (data, callback) => {
     condition: data.condition,
     year: data.year,
     price: data.price,
+    category: data.category,
+    forSale: data.forSale,
   }, (err, result) => {
     if (err) callback(err);
     // Add item to user as well
@@ -48,6 +50,8 @@ exports.update = (id, data, callback) => {
     condition: data.condition,
     year: data.year,
     name: data.name,
+    category: data.category,
+    forSale: data.forSale,
   }, (err) => {
     callback(err);
   });
