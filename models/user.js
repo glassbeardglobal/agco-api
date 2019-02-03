@@ -79,7 +79,6 @@ exports.removeItem = (itemId, data, callback) => {
     query['$push'] = { transactions: data.transactionId };
   }
 
-  console.log(query);
   mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(data.userId) }, query, (err) => {
     callback(err);
   });

@@ -75,3 +75,14 @@ exports.toggleSelling = (id, data, callback) => {
     callback(err);
   });
 };
+
+exports.transact = (id, data, callback) => {
+  mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(id) }, {
+    $set: {
+      forSale: false,
+      userId: ObjectId(data.buyerId),
+    },
+  }, (err) => {
+    callback(err);
+  });
+};

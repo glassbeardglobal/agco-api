@@ -2,6 +2,7 @@ const ObjectId = require('mongodb').ObjectId;
 
 const mongoUtil = require('./mongoUtil');
 const userModel = require('./user');
+const itemModel = require('./item');
 
 const collectionName = 'transaction';
 
@@ -30,7 +31,10 @@ exports.new = (data, callback) => {
     userModel.addItem(data.itemId, { userId: data.buyerId, transactionId: result.insertedId }, (err2) => {
       if (err2) callback(err2);
       userModel.removeItem(data.itemId, { userId: data.sellerId, transactionId: result.insertedId }, (err3) => {
-        callback(err3, result);
+        if (err3) callback(err3);
+        itemModel.transact(data.itemId, { buyerId: data.buyerId }, (err4) => {
+          callback(err4, result);
+        });
       });
     });
   });
