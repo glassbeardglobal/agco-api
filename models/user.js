@@ -21,7 +21,7 @@ exports.new = (data, callback) => {
     username: data.username,
     password: data.password,
     items: [],
-    transaction: [],
+    transactions: [],
     image: data.image,
     name: data.name,
     contact: data.contact,
