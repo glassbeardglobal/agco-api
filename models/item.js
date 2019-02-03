@@ -70,7 +70,7 @@ exports.delete = (id, data, callback) => {
 
 exports.toggleSelling = (id, data, callback) => {
   mongoUtil.getDb().collection(collectionName).updateOne({ _id: ObjectId(id) }), {
-    forSale: data.forSale,
+    $set: { forSale: data.forSale },
   }, (err) => {
     callback(err);
   }
